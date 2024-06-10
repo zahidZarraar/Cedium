@@ -27,7 +27,6 @@ model Blog {
   updatedAt   DateTime   @updatedAt
   title       String
   description String
-  published   Boolean    @default(false)
   author      User       @relation(fields: [authorEmail], references: [email])
   authorEmail String
   // categories  Category[]

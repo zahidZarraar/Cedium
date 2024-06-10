@@ -1,10 +1,14 @@
+import { cn } from "@/lib/utils";
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter as FontSans } from "next/font/google";
+import Nav from "../components/Nav";
+import SessionWrapper from "../lib/SessionWrapper";
 import "./globals.css";
-import SessionWrapper from "./lib/SessionWrapper";
-import Nav from "./components/Nav";
 
-const inter = Inter({ subsets: ["latin"] });
+const fontSans = FontSans({
+  subsets: ["latin"],
+  variable: "--font-sans"
+});
 
 export const metadata: Metadata = {
   title: "Cedium",
@@ -19,9 +23,14 @@ export default function RootLayout({
   return (
     <SessionWrapper>
       <html lang="en">
-        <body className={inter.className}>
-          <Nav />
-          {children}
+        <body
+          className={cn(
+            "min-h-screen bg-background font-sans antialiased",
+            fontSans.variable
+          )}
+        >
+            <Nav />
+            {children}
         </body>
       </html>
     </SessionWrapper>
