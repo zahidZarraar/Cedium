@@ -14,27 +14,34 @@ import {
 import { Input } from "./ui/input";
 import { Toaster, toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { Textarea } from "./ui/textarea";
+import { useState } from "react";
+import { Loader2 } from "lucide-react";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 // Zod Validation
 const formSchema = z.object({
-  //   username: z.string().min(4, {
-  //     message: "Username must be at least 4 characters."
-  //   }),
-  //     password: z.string().min(4, {
-  //         message: "Password must be at least 8 characters."
-  //     }),
-  //     email:
+  title: z.string().min(5, {
+    message: "Title must be at least 4 characters."
+  }),
+  description: z.string().min(10, {
+    message: "Description must be of atleast 5 words."
+  })
 });
 
 export function BlogForm() {
-  //   const form = useForm<z.infer<typeof formSchema>>({
-  //     resolver: zodResolver(formSchema),
-  //     defaultValues: {
-  //       username: ""
-  //     }
-  //   }); TODO : zod validation
+  const [loading, setLoading] = useState<Boolean>(false);
 
-  const form = useForm();
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      title: "",
+      description: ""
+    }
+  });
+
+  console.log("form : ", form);
+
   const router = useRouter();
 
   // 2. Define a submit handler.
@@ -42,13 +49,13 @@ export function BlogForm() {
     await fetch(`http://localhost:3000/api/blogs`, {
       method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json"
       },
       body: JSON.stringify(values)
     })
       .then(async (res) => {
         if (!res.ok) {
-          toast.error('Failed to create blog')
+          toast.error("Failed to create blog");
           throw new Error("Failed to create blog");
         }
         toast.success("Blog Created Succesfully !");
@@ -57,7 +64,7 @@ export function BlogForm() {
         return res.json();
       })
       .catch((err) => {
-        toast.error('Something Went Wrong !');
+        toast.error("Something Went Wrong !");
         throw new Error(err);
       });
 
@@ -78,7 +85,7 @@ export function BlogForm() {
                   type="text"
                   placeholder="Basic Title"
                   {...field}
-                  className="!border-none !outline-0 placeholder:text-2xl placeholder:text-bold"
+                  className="!border-none !outline-0  leading-none caret-black placeholder:text-3xl max-sm:text-2xl text-3xl  font-bold placeholder:font-bold"
                 />
               </FormControl>
               <FormMessage />
@@ -91,11 +98,13 @@ export function BlogForm() {
           render={({ field }) => (
             <FormItem>
               <FormControl>
-                <Input
-                  type="text"
+                <Textarea
                   placeholder="Write Your Blog Here..."
                   {...field}
-                  className="!border-none !outline-0 "
+                  className="!border-non h-[400px] 
+                  block border-none focus-visible:ring-transparent outline-ring-0 text-xl max-sm:text-[1rem] 
+                  leading-none caret-black placeholder:text-xl
+                  "
                 />
               </FormControl>
               <FormMessage />
@@ -105,7 +114,9 @@ export function BlogForm() {
         <Button
           type="submit"
           className="!mt-10 float-right bg-green-700 rounded-full !py-1 text-white px-10"
+          disabled={loading && true}
         >
+          {loading && <Loader2 className="animate-spin h-4 mr-2 w-4" />}
           Submit
         </Button>
       </form>
