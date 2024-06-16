@@ -29,6 +29,7 @@ const handler = NextAuth({
             email: user.email as string,
             name: user.name,
             image: user.image,
+
           },
         });
       }

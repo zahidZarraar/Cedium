@@ -14,26 +14,53 @@ datasource db {
 }
 
 model User {
-  id    Int     @default(autoincrement())
-  email String  @id @unique
-  name  String?
-  image String?
-  Blog  Blog[]
+  id            Int        @id @default(autoincrement())
+  name          String
+  image         String?
+  email         String     @unique
+  bookmarks     Bookmark[]
+  createdAt     DateTime   @default(now())
+  blogs         Blog[]
+  comments      Comment[]
+  likes         Like[]
 }
 
 model Blog {
   id          Int        @id @default(autoincrement())
-  createdAt   DateTime   @default(now())
-  updatedAt   DateTime   @updatedAt
   title       String
   description String
-  author      User       @relation(fields: [authorEmail], references: [email])
-  authorEmail String
-  // categories  Category[]
+  updatedAt   DateTime   @updatedAt
+  blogImage   String?
+  comments    Comment[]
+  likes       Like[]
+  authorId    Int
+  author      User       @relation(fields: [authorId], references: [id])
+  authorName  String
+  bookmarks   Bookmark[]
 }
 
-model Category {
-  id    Int    @id @default(autoincrement())
-  name  String
-  // blogs Blog[]
+model Comment {
+  id        Int      @id @default(autoincrement())
+  content   String
+  createdAt DateTime @default(now())
+  authorId  Int
+  author    User     @relation(fields: [authorId], references: [id])
+  blogId    Int
+  blog      Blog     @relation(fields: [blogId], references: [id])
+}
+
+model Like {
+  id     Int  @id @default(autoincrement())
+  userId Int
+  user   User @relation(fields: [userId], references: [id])
+  blogId Int
+  blog   Blog @relation(fields: [blogId], references: [id])
+}
+
+model Bookmark {
+  id     Int  @id @default(autoincrement())
+  userId Int
+  user   User @relation(fields: [userId], references: [id])
+  blogId Int
+  blog   Blog @relation(fields: [blogId], references: [id])
 }
