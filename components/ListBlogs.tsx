@@ -1,4 +1,5 @@
 import { Blog } from "@prisma/client";
+import BlogContainer from "./BlogContainer";
 
 const getData = async () => {
   const res = await fetch("http://localhost:3000/api/blogs", {
@@ -24,10 +25,18 @@ const ListBlogs = async () => {
 
   return (
     <main>
-      <h1 className='pb-10 text-3xl font-semibold '>Blogs</h1>
+      <h1 className="pb-10 text-3xl font-semibold ">Blogs</h1>
       <ul>
         {data?.length > 0 &&
-          data.map((blog: Blog) => <li key={blog.id}>{blog.title}</li>)}
+          data.map((blog: Blog) => (
+            <BlogContainer
+              key={blog.id}
+              updatedAt={blog.updatedAt as Date}
+              author={blog.authorEmail}
+              description={blog.description}
+              title={blog.title}
+            />
+          ))}
       </ul>
     </main>
   );

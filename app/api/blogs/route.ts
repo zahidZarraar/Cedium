@@ -13,14 +13,14 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ message: "Unauthorized" });
   }
 
-  const { title, description} = await req.json();
+  const { title, description } = await req.json();
 
   try {
     const post = await prisma.blog.create({
       data: {
         title,
         description,
-        author: { connect: { email: session.user?.email as string } }
+        author: { connect: { email: session.user?.name as string } }
         // categories: { connect: categoryIds.map(id => ({ id })) },
       }
     });
@@ -35,7 +35,6 @@ export async function POST(req: NextRequest) {
 export async function GET(req: NextRequest) {
   try {
     const allBlogs = await prisma.blog.findMany();
-    console.log("allposts : ", allBlogs);
 
     return Response.json(allBlogs);
   } catch (err) {
