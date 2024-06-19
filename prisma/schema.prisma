@@ -14,15 +14,15 @@ datasource db {
 }
 
 model User {
-  id            Int        @id @default(autoincrement())
-  name          String
-  image         String?
-  email         String     @unique
-  bookmarks     Bookmark[]
-  createdAt     DateTime   @default(now())
-  blogs         Blog[]
-  comments      Comment[]
-  likes         Like[]
+  id        Int        @id @default(autoincrement())
+  name      String
+  image     String?
+  email     String     @unique
+  bookmarks Bookmark[]
+  createdAt DateTime   @default(now())
+  blogs     Blog[]
+  comments  Comment[]
+  likes     Like[]
 }
 
 model Blog {
@@ -35,7 +35,6 @@ model Blog {
   likes       Like[]
   authorId    Int
   author      User       @relation(fields: [authorId], references: [id])
-  authorName  String
   bookmarks   Bookmark[]
 }
 

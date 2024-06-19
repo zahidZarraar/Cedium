@@ -32,6 +32,33 @@ export async function POST(req: NextRequest) {
   }
 }
 
+export async function DELETE(req: NextRequest, { params }: { params: { blogId: string } }) {
+
+  const { blogId } = params;
+
+  console.log('blogId : ', blogId);
+
+  try {
+    const deletedBlog = await prisma.blog.delete({
+      where: {
+        id: Number(blogId)
+      }
+    });
+
+    return NextResponse.json(deletedBlog);
+  } catch (e) {
+    console.error("SOME UNKNOWN ERROR : ", e);
+    return Response.json(
+      {
+        message: "Something Went Wrong !"
+      },
+      {
+        status: 404
+      }
+    );
+  }
+}
+
 export async function GET(req: NextRequest) {
   try {
     const allBlogs = await prisma.blog.findMany();
