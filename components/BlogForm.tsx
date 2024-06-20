@@ -18,6 +18,8 @@ import { Textarea } from "./ui/textarea";
 import { useState } from "react";
 import { Loader2 } from "lucide-react";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Label } from "./ui/label";
+import { useSession } from "next-auth/react";
 
 // Zod Validation
 const formSchema = z.object({
@@ -26,7 +28,8 @@ const formSchema = z.object({
   }),
   description: z.string().min(10, {
     message: "Description must be of atleast 5 words."
-  })
+  }),
+  blogImage: z.string()
 });
 
 export function BlogForm() {
@@ -36,11 +39,10 @@ export function BlogForm() {
     resolver: zodResolver(formSchema),
     defaultValues: {
       title: "",
-      description: ""
+      description: "",
+      blogImage: ""
     }
   });
-
-  console.log("form : ", form);
 
   const router = useRouter();
 
@@ -111,6 +113,22 @@ export function BlogForm() {
             </FormItem>
           )}
         />
+        <>
+          <Label className="text-gray-600">Select Banner Image</Label>
+          <FormField
+            name="blogImage"
+            control={form.control}
+            render={({ field }) => (
+              <FormItem>
+                <FormControl>
+                  <Input type="file" {...field} className="w-max" />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </>
+
         <Button
           type="submit"
           className="!mt-10 float-right bg-green-700 rounded-full !py-1 text-white px-10"

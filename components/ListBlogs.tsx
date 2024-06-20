@@ -1,13 +1,17 @@
-import { Blog } from "@prisma/client";
+import { Blog, User } from "@prisma/client";
 import BlogContainer from "./BlogContainer";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "./ui/button";
 import { Plus } from "lucide-react";
 
+export interface BlogT extends Blog {
+  author: Partial<User>;
+}
+
 const getData = async () => {
   const res = await fetch("http://localhost:3000/api/blogs", {
-    cache: "no-cache",
+    cache: "no-store",
     method: "GET",
     headers: {
       "Content-Type": "application/json"
@@ -15,7 +19,6 @@ const getData = async () => {
   });
 
   if (!res.ok) {
-    // This will activate the closest `error.js` Error Boundary
     throw new Error("Failed to fetch data");
   }
 
@@ -49,13 +52,10 @@ const ListBlogs = async () => {
       <h1 className="pb-10 text-3xl font-semibold ">Blogs</h1>
       <ul>
         {data?.length > 0 &&
-          data.map((blog: Blog) => (
+          data.map((blog: BlogT) => (
             <BlogContainer
               key={blog.id}
-              updatedAt={blog.updatedAt as Date}
-              author={blog.title as string}
-              description={blog.description}
-              title={blog.title}
+              blog={blog}
             />
           ))}
       </ul>

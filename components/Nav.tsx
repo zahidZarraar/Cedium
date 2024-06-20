@@ -6,9 +6,18 @@ import Link from "next/link";
 import React from "react";
 import { Button } from "./ui/button";
 import Image from "next/image";
+import { cookies } from "next/headers";
+import { useCookies } from "next-client-cookies";
 
 const Nav = () => {
   const { data: session } = useSession();
+  const cookies = useCookies();
+
+  const signoutHandler = () => {
+    cookies.set("user-id", "");
+
+    signOut();
+  };
 
   return (
     <nav className="flex justify-between w-full items-center py-4 px-10 border-b border-gray-700">
@@ -40,7 +49,7 @@ const Nav = () => {
           <Button
             variant={"link"}
             className="text-red-700"
-            onClick={() => signOut()}
+            onClick={signoutHandler}
           >
             Signout
           </Button>
