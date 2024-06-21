@@ -1,16 +1,19 @@
+import { BlogFull } from "@/actions/Types";
 import { cn, formatDate } from "@/lib/utils";
-import { Bookmark, BookmarkIcon, MessageCircle } from "lucide-react";
+import { MessageCircle } from "lucide-react";
+import BookmarkBtn from "../buttons/BookmarkBtn";
 
 interface BlogMiniT {
     updatedAt: Date;
     className?: string;
-    blog: any;
+    blog: BlogFull;
 }
 
 const BlogMiniBox = ({ updatedAt, className, blog }: BlogMiniT) => {
     const comments = blog?.comments && blog?.comments.length;
+    const bookmarks = blog?.bookmarks;
 
-    console.log("blog : ", blog);
+    const blogId = Number(blog?.id);
 
     return (
         <div
@@ -23,12 +26,9 @@ const BlogMiniBox = ({ updatedAt, className, blog }: BlogMiniT) => {
                     {comments}
                 </p>
             </div>
-            <div>
-                <BookmarkIcon
-                    size={18}
-                    color="red"
-                    enableBackground={"red"}
-                />
+            <div className="flex space-x-1 items-center">
+                <BookmarkBtn id={blogId} bookmarks={blog?.bookmarks} />
+                <p className="text-gray-600 text-[0.8rem]">{bookmarks?.length}</p>
             </div>
         </div>
     );

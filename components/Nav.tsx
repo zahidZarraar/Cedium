@@ -44,7 +44,9 @@ const Nav = () => {
               alt="user-image"
               src={session?.user?.image as string}
             />
-            <h3>{session?.user?.name}</h3>
+            <Link href="/profile">
+              <h3 className='cursor-hover hover:border-b py-2 border-black'>{session?.user?.name}</h3>
+            </Link>
           </div>
           <Button
             variant={"link"}

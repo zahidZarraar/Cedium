@@ -56,17 +56,20 @@ export function BlogForm() {
       body: JSON.stringify(values)
     })
       .then(async (res) => {
+        const response = await res.json();
+
         if (!res.ok) {
+          console.log('res : ', response)
           toast.error("Failed to create blog");
-          throw new Error("Failed to create blog");
+          throw new Error(response.message);
         }
         toast.success("Blog Created Succesfully !");
-        await new Promise((r) => setTimeout(r, 5000));
+        await new Promise((r) => setTimeout(r, 2000));
         router.push("/");
         return res.json();
       })
       .catch((err) => {
-        toast.error("Something Went Wrong !");
+        toast.error(err.message);
         throw new Error(err);
       });
 

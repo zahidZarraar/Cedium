@@ -9,12 +9,10 @@ export async function POST(req: NextRequest) {
   const session = await getSession({});
   const cookiestore = cookies();
 
-  const userid = await cookiestore.get("user-id");
+  const userid = cookiestore.get("user-id");
 
-  console.log("session : ", session);
-
-  if (!session) {
-    return NextResponse.json({ message: "Unauthorized" });
+  if (!userid || userid == undefined) {
+    return NextResponse.json({ message: "Unauthorized" }, { status: 500 });
   }
 
   const { title, description, blogImage } = await req.json();
@@ -32,7 +30,10 @@ export async function POST(req: NextRequest) {
     return NextResponse.json(post);
   } catch (error) {
     console.error(error);
-    return NextResponse.json({ error: "Error creating post" }, { status: 400 });
+    return NextResponse.json(
+      { message: "Error creating post" },
+      { status: 400 }
+    );
   }
 }
 
@@ -86,7 +87,9 @@ export async function GET(req: NextRequest) {
               }
             }
           }
-        }
+        },
+        bookmarks: {},
+        likes: {}
       }
     });
 

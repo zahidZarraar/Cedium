@@ -4,10 +4,7 @@ import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "./ui/button";
 import { Plus } from "lucide-react";
-
-export interface BlogT extends Blog {
-  author: Partial<User>;
-}
+import { BlogFull } from "@/actions/Types";
 
 const getData = async () => {
   const res = await fetch("http://localhost:3000/api/blogs", {
@@ -52,7 +49,7 @@ const ListBlogs = async () => {
       <h1 className="pb-10 text-3xl font-semibold ">Blogs</h1>
       <ul>
         {data?.length > 0 &&
-          data.map((blog: BlogT) => (
+          data.map((blog: BlogFull) => (
             <BlogContainer
               key={blog.id}
               blog={blog}

@@ -4,6 +4,7 @@ import { Inter as FontSans } from "next/font/google";
 import Nav from "../components/Nav";
 import SessionWrapper from "../lib/SessionWrapper";
 import "./globals.css";
+import QueryClientWrapper from "@/lib/ReactQueryWrapper";
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -22,17 +23,20 @@ export default function RootLayout({
 }>) {
   return (
     <SessionWrapper>
-      <html lang="en">
-        <body
-          className={cn(
-            "min-h-screen bg-background font-sans antialiased",
-            fontSans.variable
-          )}
-        >
+      <QueryClientWrapper>
+        <html lang="en">
+          <body
+            className={cn(
+              "min-h-screen bg-background font-sans antialiased",
+              fontSans.variable
+            )}
+          >
             <Nav />
             {children}
-        </body>
-      </html>
+          </body>
+        </html>
+        {/* </QueryClientProvider> */}
+      </QueryClientWrapper>
     </SessionWrapper>
   );
 }

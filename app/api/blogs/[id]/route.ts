@@ -33,7 +33,9 @@ export async function GET(
               }
             }
           }
-        }
+        },
+        bookmarks: {},
+        likes: {}
       }
     });
 
