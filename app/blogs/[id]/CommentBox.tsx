@@ -5,18 +5,25 @@ import { Input } from "@/components/ui/input";
 import prisma from "@/lib/prisma";
 import { cookies } from "next/headers";
 import { useParams } from "next/navigation";
-import React, { FormEvent, useState } from "react";
+import React, { FormEvent, Ref, useRef, useState } from "react";
 import { submitHandler } from "./utils";
 import { toast } from "sonner";
 
-const CommentBox = ({ params, userId }: { params: { id: string }, userId: number }) => {
+const CommentBox = ({
+  params,
+  userId
+}: {
+  params: { id: string };
+  userId: number;
+}) => {
   const { id } = params;
-
+  const formRef = useRef<HTMLFormElement>(null);
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const formData = new FormData(e.currentTarget);
+
 
     const response = await submitHandler(formData, Number(id), userId);
 
@@ -26,12 +33,13 @@ const CommentBox = ({ params, userId }: { params: { id: string }, userId: number
       toast.error(response.message);
     }
 
+    formRef.current?.reset();
   };
 
   // TODO : on form submission make the input values reset
   return (
     <div className="flex w-full items-center space-x-2">
-      <form onSubmit={handleSubmit} className="w-full flex space-x-1">
+      <form ref={formRef} onSubmit={handleSubmit} className="w-full flex space-x-1">
         <input
           name="comment"
           className="border-gray-400 w-full border py-1 px-4

@@ -5,6 +5,7 @@ import Nav from "../components/Nav";
 import SessionWrapper from "../lib/SessionWrapper";
 import "./globals.css";
 import QueryClientWrapper from "@/lib/ReactQueryWrapper";
+import { Toaster } from "sonner";
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -33,6 +34,7 @@ export default function RootLayout({
           >
             <Nav />
             {children}
+            <Toaster richColors />
           </body>
         </html>
         {/* </QueryClientProvider> */}

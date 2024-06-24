@@ -49,7 +49,7 @@ const BlogContainer = ({ blog }: any) => {
         </div>
 
         {/* mini blog overview features */}
-        <BlogMiniBox blog={blog} updatedAt={updatedAt} />
+        <BlogMiniBox id={blog?.id} />
       </section>
       {/* right side(blog image) */}
       <section className="my-auto hover:cursor">

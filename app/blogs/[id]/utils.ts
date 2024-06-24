@@ -7,8 +7,6 @@ export const submitHandler = async (
   blogId: number,
   authorId: number
 ) => {
-  "use server";
-
   const comment = formData.get("comment");
   try {
     const newComment = await prisma.comment.create({

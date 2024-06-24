@@ -1,17 +1,12 @@
-import { BlogT } from "@/components/ListBlogs";
 import MaxWidthWrapper from "@/components/MaxWidthWrapper";
 import BlogMiniBox from "@/components/ui/BlogMiniBox";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import prisma from "@/lib/prisma";
 import { formatDate } from "@/lib/utils";
-import { User2, User2Icon } from "lucide-react";
-import Image from "next/image";
-import { useEffect, useState } from "react";
-import { Toaster, toast } from "sonner";
-import CommentBox from "./CommentBox";
+import { User2 } from "lucide-react";
 import { cookies } from "next/headers";
-import { submitHandler } from "./utils";
+import Image from "next/image";
+import { Toaster } from "sonner";
+import CommentBox from "./CommentBox";
+import CommentDisplay from "./CommentDisplay";
 
 const getBlog = async (id: number) => {
   const res = await fetch(`http://localhost:3000/api/blogs/${id}`, {
@@ -74,8 +69,7 @@ const Page = async ({ params }: { params: { id: string } }) => {
       </div>
 
       <BlogMiniBox
-        updatedAt={new Date()}
-        blog={blog}
+        id={blog?.id}
         className="py-3 border-y border-gray-200 px-4 w-full"
       />
 
@@ -94,35 +88,14 @@ const Page = async ({ params }: { params: { id: string } }) => {
           {blog?.description}
         </p>
         <BlogMiniBox
-          updatedAt={new Date()}
-          blog={blog}
+          id={blog?.id}
           className="py-3 border-y border-gray-200 px-4"
         />
 
         {/* comments display */}
         <div className="flex flex-col space-y-4">
           <h2 className="text-lg font-bold">Comments</h2>
-          {comments?.length > 0 &&
-            comments?.map((comment, index) => (
-              <div key={index} className="flex space-x-3 border-b  pb-2 pt-0 items-center">
-                {comment?.author?.image ? (
-                  <Image
-                    src={comment?.author.image}
-                    alt="author Image"
-                    className="mr-1 text-white rounded-full p-1"
-                    width={35}
-                    height={35}
-                  />
-                ) : (
-                  <User2 className="mr-1 bg-gray-500 text-white rounded-full p-1" />
-                )}
-                {/* name and comment */}
-                <div className='flex flex-col text-[0.9rem]'>
-                  <h2 className='text-gray-700'>{comment?.author?.name}</h2>
-                  <h2>{comment?.content}</h2>
-                </div>
-              </div>
-            ))}
+          <CommentDisplay />
         </div>
 
         {/* comment box */}

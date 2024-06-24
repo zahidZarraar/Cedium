@@ -1,14 +1,13 @@
 // components/UserProfile.tsx
 "use client";
 
-import { useUser } from "@/hooks/useUser";
+import { useUser } from "@/hooks/queries";
 import { formatDate } from "@/lib/utils";
 import Image from "next/image";
+import Blog from "./Blog";
 
 const Page = () => {
   const { data: user, isLoading, error } = useUser();
-
-  console.log("user : ", user);
 
   if (isLoading)
     return (
@@ -41,17 +40,8 @@ const Page = () => {
       <div className="profile-details mt-8">
         <h2 className="text-2xl font-semibold mb-4">Blogs</h2>
         <ul className="profile-blogs space-y-4">
-          {user.blogs.map((blog) => (
-            <li
-              key={blog.id}
-              className="blog-item p-4 bg-gray-100 rounded-md shadow-sm"
-            >
-              <h3 className="text-xl font-semibold">{blog.title}</h3>
-              <p className="text-gray-700">{blog.description}</p>
-              <p className="text-gray-500">
-                Updated at: {formatDate(blog.updatedAt)}
-              </p>
-            </li>
+          {user.blogs.map((blog: any) => (
+            <Blog key={blog?.id} blog={blog} />
           ))}
         </ul>
 
