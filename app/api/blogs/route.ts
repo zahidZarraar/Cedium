@@ -4,6 +4,7 @@ import prisma from "../../../lib/prisma";
 import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { cookies } from "next/headers";
+import axios from "axios";
 
 export async function POST(req: NextRequest) {
   const session = await getSession({});
@@ -16,6 +17,25 @@ export async function POST(req: NextRequest) {
   }
 
   const { title, description, blogImage } = await req.json();
+
+  let imageHash;
+  try {
+    const res = await fetch(`http://localhost:3000/api/blogs`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(await req.json())
+    })
+
+    imageHash = await res.text();
+  } catch (e) {
+    console.log(e);
+    return NextResponse.json(
+      { message: "Error while deploying image to pinata" },
+      { status: 400 }
+    );
+  }
 
   try {
     const post = await prisma.blog.create({

@@ -5,16 +5,12 @@ import { useUser } from "@/hooks/queries";
 import { formatDate } from "@/lib/utils";
 import Image from "next/image";
 import Blog from "./Blog";
+import Loader from "./[components]/Loader";
 
 const Page = () => {
   const { data: user, isLoading, error } = useUser();
 
-  if (isLoading)
-    return (
-      <div className="flex justify-center items-center h-screen">
-        Loading...
-      </div>
-    );
+  if (isLoading) return <Loader />;
   if (error)
     return (
       <div className="flex justify-center items-center h-screen">
