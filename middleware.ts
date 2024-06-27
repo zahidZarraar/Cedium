@@ -7,7 +7,7 @@ export async function middleware(req: NextRequest) {
   // console.log('token : ', token);
 
   // if (!token) {
-  //   return NextResponse.redirect(new URL("/api/auth/signin", req.url));
+  //   return NextResponse.redirect(new URL("/api", req.url));
   // }
 
   return NextResponse.next();
