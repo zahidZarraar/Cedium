@@ -6,6 +6,7 @@ import SessionWrapper from "../lib/SessionWrapper";
 import "./globals.css";
 import QueryClientWrapper from "@/lib/ReactQueryWrapper";
 import { Toaster } from "sonner";
+import { CookiesProvider } from "next-client-cookies/server";
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -24,21 +25,23 @@ export default function RootLayout({
 }>) {
   return (
     <SessionWrapper>
-      <QueryClientWrapper>
-        <html lang="en">
-          <body
-            className={cn(
-              "min-h-screen bg-background font-sans antialiased",
-              fontSans.variable
-            )}
-          >
-            <Nav />
-            {children}
-            <Toaster richColors />
-          </body>
-        </html>
-        {/* </QueryClientProvider> */}
-      </QueryClientWrapper>
+      <CookiesProvider>
+        <QueryClientWrapper>
+          <html lang="en">
+            <body
+              className={cn(
+                "min-h-screen bg-background font-sans antialiased",
+                fontSans.variable
+              )}
+            >
+              <Nav />
+              {children}
+              <Toaster richColors />
+            </body>
+          </html>
+          {/* </QueryClientProvider> */}
+        </QueryClientWrapper>
+      </CookiesProvider>
     </SessionWrapper>
   );
 }

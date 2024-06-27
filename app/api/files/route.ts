@@ -1,11 +1,4 @@
-import axios from "axios";
-import { NextResponse, NextRequest } from "next/server";
-
-export const config = {
-    api: {
-        bodyParser: false
-    }
-};
+import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest) {
     try {

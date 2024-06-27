@@ -1,16 +1,7 @@
-// pages/api/posts/create.js
 import { getSession } from "next-auth/react";
-import prisma from "../../../lib/prisma";
-import { NextRequest, NextResponse } from "next/server";
-import { getServerSession } from "next-auth";
 import { cookies } from "next/headers";
-import axios from "axios";
-
-export const config = {
-  api: {
-    bodyParser: false
-  }
-};
+import { NextRequest, NextResponse } from "next/server";
+import prisma from "../../../lib/prisma";
 
 export async function POST(req: NextRequest) {
   const session = await getSession({});
