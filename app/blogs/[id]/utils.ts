@@ -1,12 +1,14 @@
 "use server";
 
 import prisma from "@/lib/prisma";
+import { unstable_noStore as noStore } from "next/cache";
 
 export const submitHandler = async (
   formData: FormData,
   blogId: number,
   authorId: number
 ) => {
+  noStore();
   const comment = formData.get("comment");
   try {
     const newComment = await prisma.comment.create({

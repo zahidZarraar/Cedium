@@ -2,9 +2,11 @@ import { getSession } from "next-auth/react";
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "../../../lib/prisma";
+import { unstable_noStore as noStore } from "next/cache";
 
 export async function POST(req: NextRequest) {
-  const session = await getSession({});
+  noStore();
+
   const cookiestore = cookies();
 
   const userid = cookiestore.get("user-id");

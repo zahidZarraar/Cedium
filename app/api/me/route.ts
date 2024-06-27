@@ -1,8 +1,11 @@
 import prisma from "@/lib/prisma";
 import { cookies } from "next/headers";
 import { NextRequest } from "next/server";
+import { unstable_noStore as noStore } from "next/cache";
 
 export async function GET(res: NextRequest) {
+    noStore();
+
     const cookiestore = cookies();
     const userId = cookiestore.get("user-id");
 

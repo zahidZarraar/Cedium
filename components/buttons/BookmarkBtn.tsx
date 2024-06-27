@@ -20,7 +20,7 @@ const BookmarkBtn = ({ id, bookmarks }: Partial<BlogFull>) => {
         if (isBookmarked) {
             setBookMarked(true);
         }
-    }, [bookmarks]);
+    }, [bookmarks, userId]);
 
     const handleBookmark = async () => {
         let response;

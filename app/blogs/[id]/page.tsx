@@ -7,6 +7,8 @@ import Image from "next/image";
 import { Toaster } from "sonner";
 import CommentBox from "./CommentBox";
 import CommentDisplay from "./CommentDisplay";
+import { unstable_noStore as noStore } from "next/cache";
+
 
 const getBlog = async (id: number) => {
   const res = await fetch(`${process.env.NEXT_PUBLIC_APPURL}/api/blogs/${id}`, {

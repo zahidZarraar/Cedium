@@ -1,13 +1,9 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import prisma from "@/lib/prisma";
-import { cookies } from "next/headers";
-import { useParams } from "next/navigation";
-import React, { FormEvent, Ref, useRef, useState } from "react";
-import { submitHandler } from "./utils";
+import { FormEvent, useRef } from "react";
 import { toast } from "sonner";
+import { submitHandler } from "./utils";
 
 const CommentBox = ({
   params,

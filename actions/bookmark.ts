@@ -2,10 +2,12 @@
 
 import prisma from "@/lib/prisma";
 import { cookies } from "next/headers";
+import { unstable_noStore as noStore } from "next/cache";
 
 const cookiestore = cookies();
 
 export const addBookmark = async (blogId: number) => {
+  noStore();
   const userId = cookiestore.get("user-id");
 
   if (!userId) {
@@ -29,6 +31,7 @@ export const addBookmark = async (blogId: number) => {
 };
 
 export const removeBookmark = async (bookmarkId: number) => {
+  noStore();
   const userId = cookiestore.get("user-id");
 
   if (!userId) {
