@@ -36,7 +36,6 @@ const CommentBox = ({
     formRef.current?.reset();
   };
 
-  // TODO : on form submission make the input values reset
   return (
     <div className="flex w-full items-center space-x-2">
       <form ref={formRef} onSubmit={handleSubmit} className="w-full flex space-x-1">

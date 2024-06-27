@@ -5,7 +5,12 @@ const nextConfig = {
   images: {
     remotePatterns: [
       {
-        hostname: "avatars.githubusercontent.com"
+        hostname: "avatars.githubusercontent.com",
+        protocol: "https"
+      },
+      {
+        hostname: "red-rainy-koi-23.mypinata.cloud",
+        protocol: "https"
       }
     ],
     deviceSizes: [320, 420, 768, 1024, 1200],

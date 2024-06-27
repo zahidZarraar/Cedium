@@ -34,7 +34,7 @@ model Blog {
   comments    Comment[]
   likes       Like[]
   authorId    Int
-  author      User       @relation(fields: [authorId], references: [id])
+  author      User       @relation(fields: [authorId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   bookmarks   Bookmark[]
 }
 
@@ -43,25 +43,25 @@ model Comment {
   content   String
   createdAt DateTime @default(now())
   authorId  Int
-  author    User     @relation(fields: [authorId], references: [id])
+  author    User     @relation(fields: [authorId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   blogId    Int
-  blog      Blog     @relation(fields: [blogId], references: [id])
+  blog      Blog     @relation(fields: [blogId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 }
 
 model Like {
   id     Int  @id @default(autoincrement())
   userId Int
-  user   User @relation(fields: [userId], references: [id])
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   blogId Int
-  blog   Blog @relation(fields: [blogId], references: [id])
+  blog   Blog @relation(fields: [blogId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 }
 
 model Bookmark {
   id     Int  @id @default(autoincrement())
   userId Int
-  user   User @relation(fields: [userId], references: [id])
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   blogId Int
-  blog   Blog @relation(fields: [blogId], references: [id])
+  blog   Blog @relation(fields: [blogId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
   @@unique([userId, blogId])
 }

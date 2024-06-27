@@ -15,7 +15,7 @@ import { Input } from "./ui/input";
 import { Toaster, toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { Textarea } from "./ui/textarea";
-import { useState } from "react";
+import { ButtonHTMLAttributes, useRef, useState } from "react";
 import { Loader2 } from "lucide-react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Label } from "./ui/label";
@@ -29,8 +29,8 @@ const formSchema = z.object({
   }),
   description: z.string().min(10, {
     message: "Description must be of atleast 5 words."
-  }),
-  blogImage: z.string()
+  })
+  // blogImage: z.any().refine((files) => files?.length == 1, "File is required.")
 });
 
 export function BlogForm() {
@@ -40,42 +40,60 @@ export function BlogForm() {
     resolver: zodResolver(formSchema),
     defaultValues: {
       title: "",
-      description: "",
-      blogImage: ""
+      description: ""
     }
   });
 
   const router = useRouter();
 
+  const inputFile = useRef<HTMLInputElement>(null);
+  const [file, setFile] = useState("");
+
   // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    await fetch(`http://localhost:3000/api/blogs`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(values)
-    })
-      .then(async (res) => {
-        const response = await res.json();
+    const name = values.title?.slice(0, 5);
 
-        if (!res.ok) {
-          console.log('res : ', response)
-          toast.error("Failed to create blog");
-          throw new Error(response.message);
-        }
-        toast.success("Blog Created Succesfully !");
-        await new Promise((r) => setTimeout(r, 2000));
-        router.push("/");
-        return res.json();
+    await uploadFile(file, name)
+      .then(async (res) => {
+        const imageHash = res;
+
+        await fetch(`http://localhost:3000/api/blogs`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            title: values.title,
+            description: values.description,
+            blogImage: imageHash
+          })
+        })
+          .then(async (res) => {
+            const response = await res.json();
+
+            if (!res.ok) {
+              toast.error("Failed to create blog");
+              throw new Error(response.message);
+            }
+            toast.success("Blog Created Succesfully !");
+            await new Promise((r) => setTimeout(r, 2000));
+            router.push("/");
+            console.log("res : ", response);
+            return response;
+          })
+          .catch((err) => {
+            toast.error(err.message);
+            throw new Error(err);
+          });
       })
       .catch((err) => {
-        toast.error(err.message);
-        throw new Error(err);
+        console.log("err : ", err);
       });
-
-    console.log(values);
   }
+
+  const handleChange = (e) => {
+    setFile(e.target.files[0]);
+  };
 
   return (
     <Form {...form}>
@@ -117,21 +135,15 @@ export function BlogForm() {
             </FormItem>
           )}
         />
-        <>
+        <div className="flex flex-col space-y-3">
           <Label className="text-gray-600">Select Banner Image</Label>
-          <FormField
+          <input
+            type="file"
+            id="file"
             name="blogImage"
-            control={form.control}
-            render={({ field }) => (
-              <FormItem>
-                <FormControl>
-                  <Input type="file" {...field} className="w-max" />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
+            onChange={handleChange}
           />
-        </>
+        </div>
 
         <Button
           type="submit"

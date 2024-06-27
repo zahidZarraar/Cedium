@@ -6,6 +6,12 @@ import { getServerSession } from "next-auth";
 import { cookies } from "next/headers";
 import axios from "axios";
 
+export const config = {
+  api: {
+    bodyParser: false
+  }
+};
+
 export async function POST(req: NextRequest) {
   const session = await getSession({});
   const cookiestore = cookies();
@@ -17,25 +23,6 @@ export async function POST(req: NextRequest) {
   }
 
   const { title, description, blogImage } = await req.json();
-
-  let imageHash;
-  try {
-    const res = await fetch(`http://localhost:3000/api/blogs`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(await req.json())
-    })
-
-    imageHash = await res.text();
-  } catch (e) {
-    console.log(e);
-    return NextResponse.json(
-      { message: "Error while deploying image to pinata" },
-      { status: 400 }
-    );
-  }
 
   try {
     const post = await prisma.blog.create({

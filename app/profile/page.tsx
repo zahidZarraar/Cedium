@@ -71,7 +71,7 @@ const Page = () => {
           ))}
         </ul>
 
-        <h2 className="text-2xl font-semibold mt-8 mb-4">Likes</h2>
+        {/* <h2 className="text-2xl font-semibold mt-8 mb-4">Likes</h2>
         <ul className="profile-likes space-y-4">
           {user.likes.map((like) => (
             <li
@@ -81,7 +81,7 @@ const Page = () => {
               <p className="text-gray-700">Blog ID: {like.blogId}</p>
             </li>
           ))}
-        </ul>
+        </ul> */}
       </div>
     </div>
   );

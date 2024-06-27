@@ -78,9 +78,9 @@ const Page = async ({ params }: { params: { id: string } }) => {
       <main className="py-6 flex flex-col space-y-8">
         <div className="relative w-full h-[230px] rounded-xl">
           <Image
-            src={"/assets/blogImage.jpeg"}
+            src={`${process.env.NEXT_PUBLIC_PINATA_GATEWAYURL}/ipfs/${blog?.blogImage}`}
             alt="just an Image"
-            className="relative object-fill w-full h-full"
+            className="relative object-cover w-full h-full"
             fill
           />
         </div>

@@ -16,16 +16,24 @@ export const useValidateComment = (id: number) => {
     return isValidate;
 };
 
-export const uploadFile = async (rawFile) => {
+export const uploadFile = async (fileToUpload, name: string) => {
     try {
+        const data = new FormData();
+        data.set("file", fileToUpload);
+        data.set("name", name);
         const res = await fetch("/api/files", {
             method: "POST",
-            body: rawFile
+            body: data
         });
-        const ipfsHash = await res.text();
-        return ipfsHash;
+        console.log('file data ; ', data);
+
+        const resData = await res.json();
+        // setCid(resData.IpfsHash);
+        // setUploading(false);
+        return resData?.IpfsHash;
     } catch (e) {
         console.log(e);
-        throw e;
+        // setUploading(false);
+        alert("Trouble uploading file");
     }
 };

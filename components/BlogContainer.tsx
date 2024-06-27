@@ -14,7 +14,7 @@ interface BlogT {
 }
 
 const BlogContainer = ({ blog }: any) => {
-  const { id, title, updatedAt, description, author } = blog;
+  const { id, title, updatedAt, description, author, blogImage } = blog;
 
   console.log("blogconatiner ; ", blog);
 
@@ -54,11 +54,11 @@ const BlogContainer = ({ blog }: any) => {
       {/* right side(blog image) */}
       <section className="my-auto hover:cursor">
         <Image
-          src="/assets/blogImage.jpeg"
-          className="rounded-md object-cover min-h-[150px]"
+          src={`${process.env.NEXT_PUBLIC_PINATA_GATEWAYURL}/ipfs/${blog?.blogImage}`}
+          className="rounded-md object-cover h-[160px] overflow-hidden"
           alt="blog image"
           width={240}
-          height={160}
+          height={80}
         />
       </section>
     </main>
