@@ -11,6 +11,9 @@ const nextConfig = {
       {
         hostname: "red-rainy-koi-23.mypinata.cloud",
         protocol: "https"
+      },
+      {
+        hostname: "lh3.googleusercontent.com"
       }
     ],
     deviceSizes: [320, 420, 768, 1024, 1200],

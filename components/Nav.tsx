@@ -45,7 +45,9 @@ const Nav = () => {
               src={session?.user?.image as string}
             />
             <Link href="/profile">
-              <h3 className='cursor-hover hover:border-b py-2 border-black'>{session?.user?.name}</h3>
+              <h3 className="cursor-hover hover:border-b py-2 border-black">
+                {session?.user?.name}
+              </h3>
             </Link>
           </div>
           <Button
@@ -57,7 +59,10 @@ const Nav = () => {
           </Button>
         </div>
       ) : (
-        <button onClick={() => signIn("github")}>Signin with Github</button>
+        <div className="flex space-x-2">
+          {/* <Button */}
+          <button onClick={() => signIn("oauth")}>Signin</button>
+        </div>
       )}
     </nav>
   );
