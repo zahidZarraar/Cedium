@@ -57,7 +57,7 @@ export function BlogForm() {
       .then(async (res) => {
         const imageHash = res;
 
-        await fetch(`http://localhost:3000/api/blogs`, {
+        await fetch(`${process.env.NEXT_PUBLIC_APPURL}/api/blogs`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json"

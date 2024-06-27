@@ -9,7 +9,7 @@ import CommentBox from "./CommentBox";
 import CommentDisplay from "./CommentDisplay";
 
 const getBlog = async (id: number) => {
-  const res = await fetch(`http://localhost:3000/api/blogs/${id}`, {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_APPURL}/api/blogs/${id}`, {
     cache: "no-cache",
     method: "GET",
     headers: {

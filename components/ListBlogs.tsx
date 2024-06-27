@@ -7,7 +7,7 @@ import { Plus } from "lucide-react";
 import { BlogFull } from "@/actions/Types";
 
 const getData = async () => {
-  const res = await fetch("http://localhost:3000/api/blogs", {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_APPURL}/api/blogs`, {
     cache: "no-store",
     method: "GET",
     headers: {
@@ -31,12 +31,16 @@ const ListBlogs = async () => {
         <h1 className="text-red-400 font-semibold py-4 px-2 rounded-md bg-black/10 border border-gray-300 text-center mt-20 text-2xl">
           No Blogs to view. Please come back later :)
         </h1>
-        <Link href='/new-blog'
+        <Link
+          href="/new-blog"
           // className={buttonVariants()}
-          className={cn('text-center !py-1 px-4 rounded-md mt-3', buttonVariants())}
-
-        >Create Blog
-          <Plus className='ml-2' />
+          className={cn(
+            "text-center !py-1 px-4 rounded-md mt-3",
+            buttonVariants()
+          )}
+        >
+          Create Blog
+          <Plus className="ml-2" />
         </Link>
       </div>
     );
@@ -50,10 +54,7 @@ const ListBlogs = async () => {
       <ul>
         {data?.length > 0 &&
           data.map((blog: BlogFull) => (
-            <BlogContainer
-              key={blog.id}
-              blog={blog}
-            />
+            <BlogContainer key={blog.id} blog={blog} />
           ))}
       </ul>
     </main>
