@@ -28,9 +28,9 @@ const formSchema = z.object({
   title: z.string().min(5, {
     message: "Title must be at least 4 characters."
   }),
-  description: z.string().min(10, {
-    message: "Description must be of atleast 5 words."
-  })
+  // description: z.string().min(10, {
+  //   message: "Description must be of atleast 5 words."
+  // })
   // blogImage: z.any().refine((files) => files?.length == 1, "File is required.")
 });
 
@@ -42,7 +42,7 @@ export function BlogForm() {
     resolver: zodResolver(formSchema),
     defaultValues: {
       title: "",
-      description: ""
+      // description: ""
     }
   });
 
@@ -126,7 +126,7 @@ export function BlogForm() {
   return (
     <Form {...form}>
       <Toaster richColors />
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2 pt-16">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2 pb-6 pt-16">
         <FormField
           name="title"
           control={form.control}
