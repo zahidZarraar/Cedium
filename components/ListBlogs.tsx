@@ -46,8 +46,6 @@ const ListBlogs = async () => {
     );
   }
 
-  console.log("data : ", data);
-
   return (
     <main>
       <h1 className="pb-10 text-3xl font-semibold ">Blogs</h1>

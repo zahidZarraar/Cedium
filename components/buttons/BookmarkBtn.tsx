@@ -15,7 +15,9 @@ const BookmarkBtn = ({ id, bookmarks }: Partial<BlogFull>) => {
     const bookmarkedId = bookmarks && Number(bookmarks[0]?.id);
 
     useEffect(() => {
-        const isBookmarked = bookmarks?.some((blog) => blog.userId == Number(userId));
+        const isBookmarked = bookmarks?.some(
+            (blog) => blog.userId == Number(userId)
+        );
 
         if (isBookmarked) {
             setBookMarked(true);
@@ -38,6 +40,10 @@ const BookmarkBtn = ({ id, bookmarks }: Partial<BlogFull>) => {
             toast.error("Error while bookmarking !");
         }
     };
+
+    if (!id || typeof id == "undefined") {
+        return;
+    }
 
     return (
         <button className="cursor-pointer" onClick={handleBookmark}>

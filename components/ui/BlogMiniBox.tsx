@@ -13,6 +13,10 @@ const BlogMiniBox = ({ className, id }: { className?: string; id: number }) => {
   const blogId = Number(id);
   const { data: blog, isLoading, isError } = useGetBlog(blogId);
 
+  if (!id || typeof id == 'undefined') {
+    return;
+  }
+
   if (isLoading) {
     return (
       <div className="flex space-x-2">

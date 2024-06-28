@@ -16,7 +16,9 @@ interface BlogT {
 const BlogContainer = ({ blog }: any) => {
   const { id, title, updatedAt, description, author, blogImage } = blog;
 
-  console.log("blogconatiner ; ", blog);
+  if (typeof blog == "undefined" || blog == null) {
+    return <div>Blog Not Found !</div>;
+  }
 
   const trimmed = description?.slice(0, 150) + "..."; // trims description to 150 characters
 

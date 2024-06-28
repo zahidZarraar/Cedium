@@ -19,8 +19,6 @@ export const submitHandler = async (
       }
     });
 
-    console.log("new : ", newComment);
-
     return { success: true, message: "Comment created successfully" };
   } catch (err) {
     console.log("err : ", err);

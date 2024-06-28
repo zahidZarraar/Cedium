@@ -11,16 +11,15 @@ import {
   FormItem,
   FormMessage
 } from "@/components/ui/form";
-import { Input } from "./ui/input";
-import { Toaster, toast } from "sonner";
-import { useRouter } from "next/navigation";
-import { Textarea } from "./ui/textarea";
-import { ButtonHTMLAttributes, useRef, useState } from "react";
-import { Loader2 } from "lucide-react";
+import { uploadFile } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Loader2 } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { Toaster, toast } from "sonner";
+import { Input } from "./ui/input";
 import { Label } from "./ui/label";
-import { useSession } from "next-auth/react";
-import { uploadFile } from "@/hooks/useHooks";
+import { Textarea } from "./ui/textarea";
 
 // Zod Validation
 const formSchema = z.object({
@@ -46,7 +45,6 @@ export function BlogForm() {
 
   const router = useRouter();
 
-  const inputFile = useRef<HTMLInputElement>(null);
   const [file, setFile] = useState("");
 
   // 2. Define a submit handler.

@@ -1,13 +1,8 @@
 "use client";
 
-import { deleteBlog } from "@/actions/deleteBlog";
 import Comment from "@/components/ui/comment";
 import { useGetBlog } from "@/hooks/queries";
-import { useValidateComment } from "@/hooks/useHooks";
-import { Trash2, User2 } from "lucide-react";
-import Image from "next/image";
 import { useParams } from "next/navigation";
-import { useEffect, useState } from "react";
 
 const CommentDisplay = () => {
   const { id } = useParams();

@@ -4,8 +4,8 @@
 import { useUser } from "@/hooks/queries";
 import { formatDate } from "@/lib/utils";
 import Image from "next/image";
-import Blog from "./Blog";
-import Loader from "./[components]/Loader";
+import Blog from "./_components/Blog";
+import Loader from "./_components/Loader";
 
 const Page = () => {
   const { data: user, isLoading, error } = useUser();

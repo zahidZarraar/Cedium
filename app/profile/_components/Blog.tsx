@@ -3,7 +3,6 @@ import { useValidateBlog } from "@/hooks/useHooks";
 import { formatDate } from "@/lib/utils";
 import { type Blog } from "@prisma/client";
 import { Trash2 } from "lucide-react";
-import React from "react";
 import { toast } from "sonner";
 
 const Blog = ({ blog }: any) => {

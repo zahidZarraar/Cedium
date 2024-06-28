@@ -5,8 +5,8 @@ import { User2 } from "lucide-react";
 import { cookies } from "next/headers";
 import Image from "next/image";
 import { Toaster } from "sonner";
-import CommentBox from "./CommentBox";
-import CommentDisplay from "./CommentDisplay";
+import CommentBox from "./_components/CommentBox";
+import CommentDisplay from "./_components/CommentDisplay";
 import { unstable_noStore as noStore } from "next/cache";
 
 
