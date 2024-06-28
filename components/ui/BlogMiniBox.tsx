@@ -1,12 +1,9 @@
 "use client";
 
-import { BlogFull } from "@/actions/Types";
+import { useGetBlog } from "@/hooks/queries";
 import { cn, formatDate } from "@/lib/utils";
 import { MessageCircle } from "lucide-react";
 import BookmarkBtn from "../buttons/BookmarkBtn";
-import axios from "axios";
-import { useQuery } from "@tanstack/react-query";
-import { useGetBlog } from "@/hooks/queries";
 import { Skeleton } from "./skeleton";
 
 const BlogMiniBox = ({ className, id }: { className?: string; id: number }) => {

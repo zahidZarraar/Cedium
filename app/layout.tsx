@@ -1,12 +1,12 @@
+import QueryClientWrapper from "@/lib/ReactQueryWrapper";
 import { cn } from "@/lib/utils";
 import type { Metadata } from "next";
+import { CookiesProvider } from "next-client-cookies/server";
 import { Inter as FontSans } from "next/font/google";
+import { Toaster } from "sonner";
 import Nav from "../components/Nav";
 import SessionWrapper from "../lib/SessionWrapper";
 import "./globals.css";
-import QueryClientWrapper from "@/lib/ReactQueryWrapper";
-import { Toaster } from "sonner";
-import { CookiesProvider } from "next-client-cookies/server";
 
 const fontSans = FontSans({
   subsets: ["latin"],

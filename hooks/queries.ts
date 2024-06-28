@@ -5,12 +5,12 @@ import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 
 const fetchUser = async () => {
-    const { data } = await axios.get('/api/me');
+    const { data } = await axios.get(`${process.env.NEXT_PUBLIC_APPURL}/api/me`);
     return data;
 };
 
 const getBlog = async (blogId: number) => {
-    const res = await fetch(`/api/blogs/${blogId}`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_APPURL}/api/blogs/${blogId}`, {
         cache: "no-cache",
         method: "GET",
         headers: {

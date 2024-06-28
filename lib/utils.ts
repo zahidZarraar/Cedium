@@ -16,7 +16,7 @@ export const uploadFile = async (fileToUpload, name: string) => {
     const data = new FormData();
     data.set("file", fileToUpload);
     data.set("name", name);
-    const res = await fetch("/api/files", {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_APPURL}/api/files`, {
       method: "POST",
       body: data
     });
