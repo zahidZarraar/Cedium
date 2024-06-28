@@ -23,7 +23,7 @@ const BlogContainer = ({ blog }: any) => {
   const trimmed = description?.slice(0, 150) + "..."; // trims description to 150 characters
 
   return (
-    <main className="w-full flex flex-wrap justify-between items-center p-4 border-b pb-5 border-gray-300">
+    <main className="w-full flex flex-wrap max-sm:flex-col-reverse justify-between items-center p-4 border-b pb-5 border-gray-300">
       {/* left side */}
       <section className="flex-1 pr-5 flex w-full h-full flex-col justify-between space-y-3">
         <h2 className="flex items-center text-gray-700">
@@ -54,10 +54,10 @@ const BlogContainer = ({ blog }: any) => {
         <BlogMiniBox id={blog?.id} />
       </section>
       {/* right side(blog image) */}
-      <section className="my-auto hover:cursor">
+      <section className="my-auto max-sm:w-full hover:cursor">
         <Image
           src={`${process.env.NEXT_PUBLIC_PINATA_GATEWAYURL}/ipfs/${blog?.blogImage}`}
-          className="rounded-md object-cover h-[160px] overflow-hidden"
+          className="rounded-md object-cover max-sm:w-[100%] h-[160px] overflow-hidden"
           alt="blog image"
           width={240}
           height={80}
