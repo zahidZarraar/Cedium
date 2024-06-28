@@ -2,13 +2,10 @@ import prisma from "@/lib/prisma";
 import { NextRequest } from "next/server";
 import { unstable_noStore as noStore } from "next/cache";
 
-
 export async function GET(
   req: NextRequest,
   { params }: { params: { id: string } }
 ) {
-  noStore();
-
   const { id } = await params;
 
   if (typeof id !== "string") {
@@ -38,7 +35,7 @@ export async function GET(
             }
           }
         },
-        bookmarks: {},
+        bookmarks: true,
         likes: {}
       }
     });

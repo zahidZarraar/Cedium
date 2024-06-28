@@ -5,12 +5,41 @@ import { cn, formatDate } from "@/lib/utils";
 import { MessageCircle } from "lucide-react";
 import BookmarkBtn from "../buttons/BookmarkBtn";
 import { Skeleton } from "./skeleton";
+import { useQuery } from "@tanstack/react-query";
+
+const getBlog = async (blogId: number) => {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_APPURL}/api/blogs/${blogId}`,
+    {
+      cache: "no-store",
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json"
+      }
+    }
+  );
+
+  if (!res.ok) {
+    throw new Error("Failed to fetch data");
+  }
+
+  return res.json();
+};
 
 const BlogMiniBox = ({ className, id }: { className?: string; id: number }) => {
   const blogId = Number(id);
-  const { data: blog, isLoading, isError } = useGetBlog(blogId);
+  const {
+    data: blog,
+    isLoading,
+    isError
+  } = useQuery({
+    queryKey: ["blog", blogId],
+    queryFn: async () => await getBlog(blogId)
+  });
 
-  if (!id || typeof id == 'undefined') {
+  console.log("blogid : ", blog);
+
+  if (!id || typeof id == "undefined") {
     return;
   }
 
