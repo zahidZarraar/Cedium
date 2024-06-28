@@ -20,6 +20,8 @@ import { Toaster, toast } from "sonner";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 import { Textarea } from "./ui/textarea";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 
 // Zod Validation
 const formSchema = z.object({
@@ -34,6 +36,7 @@ const formSchema = z.object({
 
 export function BlogForm() {
   const [loading, setLoading] = useState<Boolean>(false);
+  const [description, setDescription] = useState("");
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -62,7 +65,7 @@ export function BlogForm() {
           },
           body: JSON.stringify({
             title: values.title,
-            description: values.description,
+            description: description,
             blogImage: imageHash
           })
         })
@@ -93,6 +96,33 @@ export function BlogForm() {
     setFile(e.target.files[0]);
   };
 
+  //Custom Tool Bar
+  const modules = {
+    toolbar: [
+      [{ header: [1, 2, false] }],
+      ["bold", "italic", "underline", "strike", "blockquote"],
+      [{ list: "ordered" }, { list: "bullet" }],
+      ["link", "color", "image"],
+      [{ "code-block": true }],
+      ["clean"]
+    ]
+  };
+  const formats = [
+    "header",
+    "bold",
+    "italic",
+    "underline",
+    "strike",
+    "blockquote",
+    "list",
+    "bullet",
+    "link",
+    "indent",
+    "image",
+    "code-block",
+    "color"
+  ];
+
   return (
     <Form {...form}>
       <Toaster richColors />
@@ -107,14 +137,30 @@ export function BlogForm() {
                   type="text"
                   placeholder="Basic Title"
                   {...field}
-                  className="!border-none !outline-0  leading-none caret-black placeholder:text-3xl max-sm:text-2xl text-3xl  font-bold placeholder:font-bold"
+                  className="!border-none mb-4 !outline-0  leading-none caret-black placeholder:text-3xl max-sm:text-2xl text-3xl  font-bold placeholder:font-bold"
                 />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
-        <FormField
+        <div className="sm:col-span-2">
+          {/* <label
+            htmlFor="content"
+            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+          >
+            Blog Content
+          </label> */}
+          <ReactQuill
+            placeholder="Write Your Thoughts here..."
+            theme="snow"
+            value={description}
+            onChange={setDescription}
+            modules={modules}
+            formats={formats}
+          />
+        </div>
+        {/* <FormField
           name="description"
           control={form.control}
           render={({ field }) => (
@@ -132,8 +178,8 @@ export function BlogForm() {
               <FormMessage />
             </FormItem>
           )}
-        />
-        <div className="flex flex-col space-y-3">
+        /> */}
+        <div className="flex pt-10 flex-col space-y-3">
           <Label className="text-gray-600">Select Banner Image</Label>
           <input
             type="file"

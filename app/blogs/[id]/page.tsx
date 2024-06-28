@@ -11,6 +11,7 @@ import { unstable_noStore as noStore } from "next/cache";
 import prisma from "@/lib/prisma";
 import { Blog } from "@prisma/client";
 import { BlogFull } from "@/actions/Types";
+import parse from "html-react-parser";
 
 const Page = async ({ params }: { params: { id: string } }) => {
   const { id } = params;
@@ -92,7 +93,7 @@ const Page = async ({ params }: { params: { id: string } }) => {
           />
         </div>
         <p className="text-[1.1rem] text-gray-900 leading-6">
-          {blog?.description}
+          {parse(blog?.description)}
         </p>
         <BlogMiniBox
           id={blog?.id}
