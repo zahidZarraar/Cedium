@@ -26,7 +26,7 @@ const Nav = () => {
       </Link>
       {session?.user?.name ? (
         <div className="flex space-x-4 items-center">
-          <Link href="/new-blog">
+          <Link href="/newBlog">
             <span className="flex hover:text-green-600 items-center">
               <Pen
                 size={16}

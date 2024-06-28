@@ -43,7 +43,7 @@ const ListBlogs = async () => {
           No Blogs to view. Please come back later :)
         </h1>
         <Link
-          href="/new-blog"
+          href="/newBlog"
           // className={buttonVariants()}
           className={cn(
             "text-center !py-1 px-4 rounded-md mt-3",
