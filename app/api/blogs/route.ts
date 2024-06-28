@@ -2,10 +2,8 @@ import { getSession } from "next-auth/react";
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "../../../lib/prisma";
-import { unstable_noStore as noStore } from "next/cache";
 
 export async function POST(req: NextRequest) {
-  noStore();
 
   const cookiestore = cookies();
 
@@ -55,47 +53,6 @@ export async function DELETE(
     return NextResponse.json(deletedBlog);
   } catch (e) {
     console.error("SOME UNKNOWN ERROR : ", e);
-    return Response.json(
-      {
-        message: "Something Went Wrong !"
-      },
-      {
-        status: 404
-      }
-    );
-  }
-}
-
-export async function GET(req: NextRequest) {
-  try {
-    const allBlogs = await prisma.blog.findMany({
-      include: {
-        author: {
-          select: {
-            id: true,
-            name: true,
-            createdAt: true,
-            image: true
-          }
-        },
-        comments: {
-          include: {
-            author: {
-              select: {
-                name: true,
-                image: true
-              }
-            }
-          }
-        },
-        bookmarks: {},
-        likes: {}
-      }
-    });
-
-    return Response.json(allBlogs);
-  } catch (err) {
-    console.error(err);
     return Response.json(
       {
         message: "Something Went Wrong !"

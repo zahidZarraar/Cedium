@@ -8,32 +8,37 @@ import { Toaster } from "sonner";
 import CommentBox from "./_components/CommentBox";
 import CommentDisplay from "./_components/CommentDisplay";
 import { unstable_noStore as noStore } from "next/cache";
-
-
-const getBlog = async (id: number) => {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_APPURL}/api/blogs/${id}`, {
-    cache: "no-cache",
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json"
-    }
-  });
-
-  if (!res.ok) {
-    throw new Error("Failed to fetch data");
-  }
-
-  return res.json();
-};
+import prisma from "@/lib/prisma";
+import { Blog } from "@prisma/client";
+import { BlogFull } from "@/actions/Types";
 
 const Page = async ({ params }: { params: { id: string } }) => {
   const { id } = params;
-  const blogId = Number(id);
 
-  const blog = await getBlog(blogId);
-
-  const comments = blog?.comments;
-  console.log("c ; ", comments);
+  const blog: any = await prisma.blog.findUniqueOrThrow({
+    where: { id: Number(id) },
+    include: {
+      author: {
+        select: {
+          name: true,
+          image: true,
+          createdAt: true
+        }
+      },
+      comments: {
+        include: {
+          author: {
+            select: {
+              name: true,
+              image: true
+            }
+          }
+        }
+      },
+      bookmarks: {},
+      likes: {}
+    }
+  });
 
   const cookiestore = cookies();
   const userId = Number(cookiestore.get("user-id")?.value);

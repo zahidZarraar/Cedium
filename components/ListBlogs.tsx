@@ -5,25 +5,36 @@ import { cn } from "@/lib/utils";
 import { buttonVariants } from "./ui/button";
 import { Plus } from "lucide-react";
 import { BlogFull } from "@/actions/Types";
+import prisma from "@/lib/prisma";
 
-const getData = async () => {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_APPURL}/api/blogs`, {
-    cache: "no-store",
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json"
+const ListBlogs = async () => {
+  // const data = await getData();
+
+  const data = await prisma.blog.findMany({
+    include: {
+      author: {
+        select: {
+          id: true,
+          name: true,
+          createdAt: true,
+          image: true
+        }
+      },
+      comments: {
+        include: {
+          author: {
+            select: {
+              name: true,
+              image: true
+            }
+          }
+        }
+      },
+      bookmarks: true,
+      likes: {}
     }
   });
 
-  if (!res.ok) {
-    throw new Error("Failed to fetch data");
-  }
-
-  return res.json();
-};
-
-const ListBlogs = async () => {
-  const data = await getData();
 
   if (!data || data?.length <= 0) {
     return (
@@ -51,7 +62,7 @@ const ListBlogs = async () => {
       <h1 className="pb-10 text-3xl font-semibold ">Blogs</h1>
       <ul>
         {data?.length > 0 &&
-          data.map((blog: BlogFull) => (
+          data.map((blog: Blog) => (
             <BlogContainer key={blog.id} blog={blog} />
           ))}
       </ul>

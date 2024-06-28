@@ -1,6 +1,6 @@
 import { Blog, Bookmark, Like, User } from "@prisma/client";
 
-export interface BlogFull extends Blog {
+export interface BlogFull extends Partial<Blog> {
     comments?: Comment[];
     likes?: Like[];
     author?: User;
